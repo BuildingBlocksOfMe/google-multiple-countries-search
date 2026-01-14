@@ -306,58 +306,62 @@ RailwayはSQLite対応で最も簡単なデプロイ方法です。
 
 1. Go to [Railway Dashboard](https://railway.app/dashboard)  
    [Railwayダッシュボード](https://railway.app/dashboard)にアクセス
-2. Click **"New Project"**  
-   **"New Project"**をクリック
-3. Select **"Deploy from GitHub repo"**  
-   **"Deploy from GitHub repo"**を選択
-4. Choose your repository: `BuildingBlocksOfMe/google-multiple-countries-search`  
-   リポジトリを選択: `BuildingBlocksOfMe/google-multiple-countries-search`
+2. Click **"New Project"** → **"Empty Project"**  
+   **"New Project"** → **"Empty Project"**をクリック
+3. Name your project (e.g., "Google Multi-Country Search")  
+   プロジェクト名を入力（例: "Google Multi-Country Search"）
 
-#### Step 2: Deploy Backend | バックエンドのデプロイ
+#### Step 2: Deploy Backend Service | バックエンドサービスのデプロイ
 
-1. Railway will detect the project. Click **"Add variables"**  
-   Railwayがプロジェクトを検出します。**"Add variables"**をクリック
-2. Add environment variables | 環境変数を追加:
+1. In your project, click **"New Service"** → **"GitHub Repo"**  
+   プロジェクト内で**"New Service"** → **"GitHub Repo"**をクリック
+2. Select: `BuildingBlocksOfMe/google-multiple-countries-search`  
+   選択: `BuildingBlocksOfMe/google-multiple-countries-search`
+3. Click **"Add Service"** | **"Add Service"**をクリック
+
+4. ⚠️ **IMPORTANT** - In **Settings** → **Service Settings**, set:  
+   ⚠️ **重要** - **Settings** → **Service Settings**で設定:
+   - **Service Name**: `backend`
+   - **Root Directory**: `backend` ← **これを設定しないとエラーになります！**
+   - **Build Command**: `npm install`
+   - **Start Command**: `node server.js`
+
+5. Go to **Variables** tab and add | **Variables**タブで環境変数を追加:
    ```
    GOOGLE_API_KEY=your_api_key_here
    GOOGLE_CX_ID=your_search_engine_id
    PORT=3001
    ```
-3. In **Settings**, set:  
-   **Settings**で設定:
-   - **Root Directory**: `backend`
-   - **Start Command**: `node server.js`
-   - **Build Command**: `npm install`
 
-4. Add a **Volume** for SQLite persistence | SQLite永続化用のVolumeを追加:
-   - Go to **Data** tab  
-     **Data**タブに移動
-   - Click **"New Volume"**  
-     **"New Volume"**をクリック
-   - Mount Path: `/app/backend/database`  
-     マウントパス: `/app/backend/database`
+6. Go to **Data** tab → **New Volume** for SQLite:  
+   **Data**タブ → **New Volume**でSQLite用のボリューム追加:
+   - **Mount Path**: `/app/database`  
+     マウントパス: `/app/database`
 
-5. Click **"Deploy"** | **"Deploy"**をクリック
+7. Wait for deployment to complete, then copy the URL  
+   デプロイ完了後、URLをコピー
+   - Example: `https://backend-production-xxxx.up.railway.app`
 
-6. Copy the generated URL (e.g., `https://your-app.railway.app`)  
-   生成されたURLをコピー（例: `https://your-app.railway.app`）
+#### Step 3: Deploy Frontend Service | フロントエンドサービスのデプロイ
 
-#### Step 3: Deploy Frontend | フロントエンドのデプロイ
+1. In the same project, click **"New Service"** → **"GitHub Repo"**  
+   同じプロジェクトで**"New Service"** → **"GitHub Repo"**をクリック
+2. Select the same repository again  
+   同じリポジトリを再度選択
+3. Click **"Add Service"** | **"Add Service"**をクリック
 
-1. In the same Railway project, click **"New Service"**  
-   同じRailwayプロジェクトで**"New Service"**をクリック
-2. Select **"GitHub Repo"** → Same repository  
-   **"GitHub Repo"**を選択 → 同じリポジトリ
-3. In **Settings**, set:  
-   **Settings**で設定:
-   - **Root Directory**: `frontend`
+4. ⚠️ **IMPORTANT** - In **Settings** → **Service Settings**, set:  
+   ⚠️ **重要** - **Settings** → **Service Settings**で設定:
+   - **Service Name**: `frontend`
+   - **Root Directory**: `frontend` ← **これを設定しないとエラーになります！**
    - **Build Command**: `npm install && npm run build`
    - **Start Command**: `npm run preview -- --port $PORT --host 0.0.0.0`
 
-4. Add environment variable | 環境変数を追加:
+5. Go to **Variables** tab and add | **Variables**タブで環境変数を追加:
    ```
-   VITE_API_URL=https://your-backend-url.railway.app
+   VITE_API_URL=https://backend-production-xxxx.up.railway.app
    ```
+   （Step 2 でコピーしたバックエンドのURLを使用）
 
 5. Update `frontend/vite.config.js` to use environment variable:  
    `frontend/vite.config.js`を更新して環境変数を使用:
@@ -403,26 +407,51 @@ const API_BASE_URL = import.meta.env.VITE_API_URL
 8. Railway will automatically redeploy  
    Railwayが自動的に再デプロイ
 
-#### Step 4: Configure CORS | CORSの設定
+6. Wait for deployment to complete, then copy the URL  
+   デプロイ完了後、URLをコピー
+   - Example: `https://frontend-production-xxxx.up.railway.app`
 
-Update `backend/server.js` to allow frontend domain:  
-`backend/server.js`を更新してフロントエンドドメインを許可:
+#### Step 4: Update Backend CORS | バックエンドのCORSを更新
 
-```javascript
-app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'https://your-frontend.railway.app'
-  ]
-}));
-```
+1. Go back to **backend service** → **Variables**  
+   **backend service**に戻り → **Variables**へ
+2. Add the frontend URL | フロントエンドのURLを追加:
+   ```
+   FRONTEND_URL=https://frontend-production-xxxx.up.railway.app
+   ```
+   （Step 3 でコピーしたフロントエンドのURLを使用）
+
+3. Backend will automatically redeploy  
+   バックエンドが自動的に再デプロイされます
 
 #### Step 5: Access Your App | アプリにアクセス
 
-Visit your frontend Railway URL: `https://your-frontend.railway.app`  
-フロントエンドのRailway URLにアクセス: `https://your-frontend.railway.app`
+Visit your frontend Railway URL: `https://frontend-production-xxxx.up.railway.app`  
+フロントエンドのRailway URLにアクセス
 
 🎉 Your app is now live! | アプリが公開されました！
+
+### Common Issues | よくある問題
+
+#### ❌ "Nixpacks build failed" Error
+
+**Problem**: Railway can't find package.json  
+**問題**: Railwayがpackage.jsonを見つけられない
+
+**Solution**: Make sure to set **Root Directory** in Service Settings  
+**解決策**: Service Settingsで**Root Directory**を必ず設定してください
+- Backend: `backend`
+- Frontend: `frontend`
+
+#### ❌ API Connection Error | API接続エラー
+
+**Problem**: Frontend can't connect to backend  
+**問題**: フロントエンドがバックエンドに接続できない
+
+**Solution**: Check environment variables  
+**解決策**: 環境変数を確認
+- Frontend `VITE_API_URL` = Backend Railway URL
+- Backend `FRONTEND_URL` = Frontend Railway URL
 
 ### Railway Free Tier Limits | Railway 無料枠の制限
 
