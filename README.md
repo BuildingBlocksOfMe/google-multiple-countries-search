@@ -1,71 +1,55 @@
 # Google Search - Multi Country Comparison
 
-A web application to compare Google search results from multiple countries side by side, with search history tracking.
+A web application that allows you to compare Google search results from multiple countries side by side. Select from 15 major countries and view up to 30 search results per country with search history tracking.
 
-複数国のGoogle検索結果を比較できるWebアプリケーションです。検索履歴機能付き。
+## Features
 
-## Features | 機能
+- 🌍 **Multi-Country Search Comparison**: Compare Google search results from any two of 15 countries simultaneously
+- 🎯 **Country Selection**: Choose from 15 major countries including US, Japan, UK, Germany, France, China, South Korea, India, and more
+- 📊 **Extended Results**: Display up to 30 search results per country (3 pages)
+- 📜 **Search History**: Save past searches with country combinations and re-run them with a single click
+- 🎨 **Modern UI**: Beautiful and intuitive design powered by TailwindCSS
+- 💾 **Persistent Storage**: Search history stored in SQLite database
 
-- 🌍 **Multi-Country Comparison**: Compare search results from 15 countries simultaneously  
-  **複数国比較**: 15カ国から選択して検索結果を同時表示
-- 🔍 **Extended Results**: Up to 30 search results per country  
-  **拡張結果**: 各国最大30件の検索結果
-- 📜 **Search History**: Save and replay previous searches  
-  **検索履歴**: 過去の検索を保存・再実行可能
-- 🎨 **Modern UI**: Beautiful interface built with TailwindCSS  
-  **モダンUI**: TailwindCSSによる美しいデザイン
-- 💾 **Persistent Storage**: SQLite database for search history  
-  **永続保存**: SQLiteで検索履歴を保存
+## Supported Countries
 
-## Supported Countries | 対応国
-
-🇺🇸 United States | 🇯🇵 Japan | 🇬🇧 United Kingdom | 🇩🇪 Germany | 🇫🇷 France  
-🇨🇳 China | 🇰🇷 South Korea | 🇮🇳 India | 🇧🇷 Brazil | 🇨🇦 Canada  
+🇺🇸 United States | 🇯🇵 Japan | 🇬🇧 United Kingdom | 🇩🇪 Germany | 🇫🇷 France
+🇨🇳 China | 🇰🇷 South Korea | 🇮🇳 India | 🇧🇷 Brazil | 🇨🇦 Canada
 🇦🇺 Australia | 🇲🇽 Mexico | 🇪🇸 Spain | 🇮🇹 Italy | 🇷🇺 Russia
 
-## Tech Stack | 技術スタック
+## Tech Stack
 
-### Frontend | フロントエンド
+### Frontend
 - React 18
 - Vite
 - TailwindCSS
 - Axios
 
-### Backend | バックエンド
+### Backend
 - Node.js
 - Express
 - SQLite3
 - Google Custom Search API
 
-## Setup | セットアップ
+## Setup Instructions
 
-### 1. Google Custom Search API Configuration | API設定
+### 1. Google Custom Search API Configuration
 
-#### Get API Key | APIキーの取得
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)  
-   [Google Cloud Console](https://console.cloud.google.com/)にアクセス
-2. Create a new project or select an existing one  
-   新しいプロジェクトを作成（または既存のプロジェクトを選択）
-3. Navigate to "APIs & Services" → "Library" and search for "Custom Search API"  
-   「APIとサービス」→「ライブラリ」から「Custom Search API」を検索
-4. Enable "Custom Search API"  
-   「Custom Search API」を有効化
-5. Go to "APIs & Services" → "Credentials" and create an "API Key"  
-   「APIとサービス」→「認証情報」から「APIキー」を作成
+#### Obtain API Key
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project (or select an existing one)
+3. Navigate to "APIs & Services" → "Library" and search for "Custom Search API"
+4. Enable "Custom Search API"
+5. Go to "APIs & Services" → "Credentials" and create an "API Key"
 
-#### Get Custom Search Engine ID | 検索エンジンIDの取得
-1. Go to [Google Programmable Search Engine](https://programmablesearchengine.google.com/)  
-   [Google Programmable Search Engine](https://programmablesearchengine.google.com/)にアクセス
-2. Click "Add" to create a new search engine  
-   「追加」をクリックして新しい検索エンジンを作成
-3. Select "Search the entire web"  
-   「ウェブ全体を検索」を選択
-4. Enter any name for the search engine  
-   検索エンジン名を任意に入力
-5. Copy the "Search engine ID (CX)" after creation  
-   作成後、「検索エンジンID（CX）」をコピー
+#### Obtain Custom Search Engine ID
+1. Visit [Google Programmable Search Engine](https://programmablesearchengine.google.com/)
+2. Click "Add" to create a new search engine
+3. Search scope: Select "Search the entire web"
+4. Search engine name: Enter any name
+5. After creation, copy the "Search Engine ID (CX)"
 
-### 2. Backend Setup | バックエンドセットアップ
+### 2. Backend Setup
 
 ```bash
 # Navigate to backend directory
@@ -77,13 +61,13 @@ npm install
 # Create environment file
 cp env.example.txt .env
 
-# Edit .env file and set your API credentials
+# Edit .env file and add your credentials
 # GOOGLE_API_KEY=your_api_key_here
 # GOOGLE_CX_ID=your_custom_search_engine_id
 # PORT=3001
 ```
 
-### 3. Frontend Setup | フロントエンドセットアップ
+### 3. Frontend Setup
 
 ```bash
 # Navigate to frontend directory
@@ -93,73 +77,63 @@ cd frontend
 npm install
 ```
 
-## Running the Application | アプリケーションの起動
+## Running the Application
 
-### Start Backend Server | バックエンドサーバーの起動
+### Start Backend Server
 
 ```bash
 cd backend
 npm start
 ```
 
-Server will start at `http://localhost:3001`  
-サーバーは `http://localhost:3001` で起動します
+The server will start at `http://localhost:3001`
 
-### Start Frontend | フロントエンドの起動
+### Start Frontend
 
-In a separate terminal:  
-別のターミナルで実行:
+In a separate terminal:
 
 ```bash
 cd frontend
 npm run dev
 ```
 
-Frontend will start at `http://localhost:3000`  
-フロントエンドは `http://localhost:3000` で起動します
+The frontend will start at `http://localhost:3000`
 
-### Access the Application | アクセス
+### Access the Application
 
-Open your browser and navigate to `http://localhost:3000`  
-ブラウザで `http://localhost:3000` にアクセス
+Open your browser and navigate to `http://localhost:3000`
 
-## Usage | 使い方
+## How to Use
 
-1. Select two countries from the dropdown menus  
-   ドロップダウンメニューから2つの国を選択
-2. Enter your search query in the search bar  
-   検索バーにキーワードを入力
-3. Click "Search" button  
-   「検索」ボタンをクリック
-4. View results from both countries side by side  
-   両国の検索結果が左右に表示されます
-5. Search history appears in the left sidebar  
-   左サイドバーに検索履歴が表示されます
-6. Click on history items to re-run searches  
-   履歴をクリックすると再検索できます
+1. **Select Countries**: Choose two countries from the dropdown menus (Country 1 and Country 2)
+2. **Enter Search Query**: Type your search keywords in the search bar
+3. **Click Search**: Press the search button to execute the query
+4. **View Results**: Results from both countries will be displayed side by side (up to 30 results each)
+5. **Check History**: Your search history appears in the left sidebar
+6. **Re-run Searches**: Click any history item to re-execute that search
 
-## Project Structure | プロジェクト構造
+## Project Structure
 
 ```
 google-search-multiple-countries/
-├── backend/                    # Backend API | バックエンドAPI
+├── backend/                    # Backend API
 │   ├── database/
-│   │   └── db.js              # SQLite database | データベース設定
+│   │   └── db.js              # SQLite database configuration
 │   ├── routes/
-│   │   └── search.js          # Search API endpoints | 検索エンドポイント
-│   ├── server.js              # Express server | サーバー
+│   │   └── search.js          # Search API endpoints
+│   ├── server.js              # Express server
 │   ├── package.json
-│   └── .env                   # Environment variables | 環境変数（要作成）
-├── frontend/                   # React frontend | フロントエンド
+│   └── .env                   # Environment variables (create this)
+├── frontend/                   # React frontend
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── CountrySelector.jsx   # Country selection | 国選択
-│   │   │   ├── SearchBar.jsx         # Search input | 検索フォーム
-│   │   │   ├── ResultsPanel.jsx      # Results display | 結果表示
-│   │   │   └── SearchHistory.jsx     # History sidebar | 履歴サイドバー
+│   │   │   ├── SearchBar.jsx         # Search input form with country selector
+│   │   │   ├── CountrySelector.jsx   # Country dropdown component
+│   │   │   ├── ResultsPanel.jsx      # Search results display
+│   │   │   └── SearchHistory.jsx     # Search history sidebar
 │   │   ├── services/
-│   │   │   └── api.js         # API communication | API通信
-│   │   ├── App.jsx            # Main app | メインアプリ
+│   │   │   └── api.js         # API communication
+│   │   ├── App.jsx            # Main application
 │   │   ├── main.jsx
 │   │   └── index.css
 │   ├── index.html
@@ -168,25 +142,24 @@ google-search-multiple-countries/
 └── README.md
 ```
 
-## API Endpoints | APIエンドポイント
+## API Endpoints
 
 ### POST /api/search
-Execute search and return results from two countries.  
-検索を実行し、2カ国の結果を返します。
+Execute a search and return results from two countries.
 
-**Request | リクエスト:**
+**Request:**
 ```json
 {
-  "query": "search term",
+  "query": "search keywords",
   "country1": "us",
   "country2": "jp"
 }
 ```
 
-**Response | レスポンス:**
+**Response:**
 ```json
 {
-  "query": "search term",
+  "query": "search keywords",
   "countries": {
     "country1": "us",
     "country2": "jp"
@@ -194,7 +167,7 @@ Execute search and return results from two countries.
   "results": {
     "country1": [
       {
-        "title": "Title",
+        "title": "Result Title",
         "link": "URL",
         "snippet": "Description",
         "displayLink": "example.com"
@@ -206,18 +179,17 @@ Execute search and return results from two countries.
 ```
 
 ### GET /api/history
-Get search history.  
-検索履歴を取得します。
+Retrieve search history.
 
-**Query Parameters | クエリパラメータ:**
-- `limit`: Number of items to return (default: 20) | 取得件数（デフォルト: 20）
+**Query Parameters:**
+- `limit`: Number of records to retrieve (default: 20)
 
-**Response | レスポンス:**
+**Response:**
 ```json
 [
   {
     "id": 1,
-    "query": "search term",
+    "query": "search keywords",
     "country1": "US",
     "country2": "JP",
     "timestamp": "2026-01-14T12:00:00.000Z"
@@ -225,254 +197,62 @@ Get search history.
 ]
 ```
 
-## Important Notes | 注意事項
+## Important Notes
 
-### Google Custom Search API Limitations | API制限
-- **Free Tier**: 100 queries per day  
-  **無料枠**: 1日あたり100クエリまで
-- **Current Usage**: 6 queries per search (3 pages × 2 countries)  
-  **現在の使用量**: 1検索あたり6クエリ（3ページ×2カ国）
-- **Daily Searches**: ~16 searches per day with free tier  
-  **1日の検索回数**: 無料枠で約16回
-- Billing must be enabled for usage beyond free tier  
-  無料枠を超える場合は課金が必要
-- Results may differ from actual Google search  
-  実際のGoogle検索とは異なる結果が表示される場合があります
+### Google Custom Search API Limits
+- **Free Tier**: 100 queries per day
+- **Current Configuration**: Each search uses 6 queries (3 pages × 2 countries)
+- **Daily Search Limit**: Approximately 16-17 searches per day with free tier
+- To use beyond the free tier, enable billing in Google Cloud Platform
+- Results may differ from regular Google search
 
-### Requirements | 必要環境
-- Node.js 18 or higher | Node.js 18以上
+### Adjusting Results Count
+
+To reduce API usage or adjust result count, modify `backend/routes/search.js`:
+
+```javascript
+// Current: 3 pages (30 results) → 6 queries per search
+const results1Items = await fetchMultiplePages(config1, 3);
+const results2Items = await fetchMultiplePages(config2, 3);
+
+// Option 1: 2 pages (20 results) → 4 queries per search (25 searches/day)
+const results1Items = await fetchMultiplePages(config1, 2);
+const results2Items = await fetchMultiplePages(config2, 2);
+
+// Option 2: 1 page (10 results) → 2 queries per search (50 searches/day)
+const results1Items = await fetchMultiplePages(config1, 1);
+const results2Items = await fetchMultiplePages(config2, 1);
+```
+
+### Development Environment
+- Node.js 18 or higher recommended
 - npm or yarn
 
-### Security | セキュリティ
-- ⚠️ Never commit `.env` file to Git  
-  `.env` ファイルは絶対にGitにコミットしないでください
-- Use proper environment variable management in production  
-  本番環境では適切な環境変数管理を行ってください
+### Security
+- **Never commit** the `.env` file to Git
+- Use proper environment variable management in production
+- Keep your API keys secure
 
-## Troubleshooting | トラブルシューティング
+## Troubleshooting
 
-### API Key Error | APIキーエラー
-- Check if `.env` file exists and is properly configured  
-  `.env` ファイルが正しく作成・設定されているか確認
-- Verify `GOOGLE_API_KEY` and `GOOGLE_CX_ID` are correct  
-  `GOOGLE_API_KEY` と `GOOGLE_CX_ID` が正しいか確認
-- Confirm Custom Search API is enabled  
-  Custom Search APIが有効化されているか確認
+### API Key Errors
+- Verify `.env` file exists in the backend directory
+- Check that `GOOGLE_API_KEY` and `GOOGLE_CX_ID` are correctly set
+- Confirm Custom Search API is enabled in Google Cloud Console
 
-### No Search Results | 検索結果が表示されない
-- Verify backend server is running (check `http://localhost:3001/health`)  
-  バックエンドサーバーが起動しているか確認
-- Check browser console for errors  
-  ブラウザのコンソールでエラーを確認
-- Ensure you haven't exceeded the daily quota (100 queries)  
-  1日の無料枠（100クエリ）を超えていないか確認
+### No Search Results
+- Ensure backend server is running (check `http://localhost:3001/health`)
+- Check browser console for errors
+- Verify you haven't exceeded the free tier limit (100 queries/day)
 
-### Port Already in Use | ポートが使用中
-- Backend: Change `PORT` in `.env` file  
-  バックエンド: `.env` ファイルの `PORT` を変更
-- Frontend: Change `server.port` in `vite.config.js`  
-  フロントエンド: `vite.config.js` の `server.port` を変更
+### Port Already in Use
+- Backend: Change `PORT` in `.env` file
+- Frontend: Modify `server.port` in `vite.config.js`
 
-## Adjusting Results Count | 結果数の調整
-
-To change the number of results per country, edit `backend/routes/search.js`:  
-国ごとの結果数を変更するには、`backend/routes/search.js` を編集:
-
-```javascript
-// Current: 3 pages (30 results) - 6 queries per search
-const results1Items = await fetchMultiplePages(config1, 3);
-
-// Option 1: 2 pages (20 results) - 4 queries per search (~25 searches/day)
-const results1Items = await fetchMultiplePages(config1, 2);
-
-// Option 2: 1 page (10 results) - 2 queries per search (~50 searches/day)
-const results1Items = await fetchMultiplePages(config1, 1);
-```
-
-## Deployment | デプロイ
-
-### Railway Deployment (Recommended) | Railway デプロイ（推奨）
-
-Railway is the easiest way to deploy this application with SQLite support.  
-RailwayはSQLite対応で最も簡単なデプロイ方法です。
-
-#### Prerequisites | 前提条件
-- Railway account (sign up at [railway.app](https://railway.app/))  
-  Railwayアカウント（[railway.app](https://railway.app/)で登録）
-- GitHub repository (already done ✓)  
-  GitHubリポジトリ（完了済み✓）
-
-#### Step 1: Create New Project | 新規プロジェクト作成
-
-1. Go to [Railway Dashboard](https://railway.app/dashboard)  
-   [Railwayダッシュボード](https://railway.app/dashboard)にアクセス
-2. Click **"New Project"** → **"Empty Project"**  
-   **"New Project"** → **"Empty Project"**をクリック
-3. Name your project (e.g., "Google Multi-Country Search")  
-   プロジェクト名を入力（例: "Google Multi-Country Search"）
-
-#### Step 2: Deploy Backend Service | バックエンドサービスのデプロイ
-
-1. In your project, click **"New Service"** → **"GitHub Repo"**  
-   プロジェクト内で**"New Service"** → **"GitHub Repo"**をクリック
-2. Select: `BuildingBlocksOfMe/google-multiple-countries-search`  
-   選択: `BuildingBlocksOfMe/google-multiple-countries-search`
-3. Click **"Add Service"** | **"Add Service"**をクリック
-
-4. ⚠️ **IMPORTANT** - In **Settings** → **Service Settings**, set:  
-   ⚠️ **重要** - **Settings** → **Service Settings**で設定:
-   - **Service Name**: `backend`
-   - **Root Directory**: `backend` ← **これを設定しないとエラーになります！**
-   - **Build Command**: `npm install`
-   - **Start Command**: `node server.js`
-
-5. Go to **Variables** tab and add | **Variables**タブで環境変数を追加:
-   ```
-   GOOGLE_API_KEY=your_api_key_here
-   GOOGLE_CX_ID=your_search_engine_id
-   PORT=3001
-   ```
-
-6. Go to **Data** tab → **New Volume** for SQLite:  
-   **Data**タブ → **New Volume**でSQLite用のボリューム追加:
-   - **Mount Path**: `/app/database`  
-     マウントパス: `/app/database`
-
-7. Wait for deployment to complete, then copy the URL  
-   デプロイ完了後、URLをコピー
-   - Example: `https://backend-production-xxxx.up.railway.app`
-
-#### Step 3: Deploy Frontend Service | フロントエンドサービスのデプロイ
-
-1. In the same project, click **"New Service"** → **"GitHub Repo"**  
-   同じプロジェクトで**"New Service"** → **"GitHub Repo"**をクリック
-2. Select the same repository again  
-   同じリポジトリを再度選択
-3. Click **"Add Service"** | **"Add Service"**をクリック
-
-4. ⚠️ **IMPORTANT** - In **Settings** → **Service Settings**, set:  
-   ⚠️ **重要** - **Settings** → **Service Settings**で設定:
-   - **Service Name**: `frontend`
-   - **Root Directory**: `frontend` ← **これを設定しないとエラーになります！**
-   - **Build Command**: `npm install && npm run build`
-   - **Start Command**: `npm run preview -- --port $PORT --host 0.0.0.0`
-
-5. Go to **Variables** tab and add | **Variables**タブで環境変数を追加:
-   ```
-   VITE_API_URL=https://backend-production-xxxx.up.railway.app
-   ```
-   （Step 2 でコピーしたバックエンドのURLを使用）
-
-5. Update `frontend/vite.config.js` to use environment variable:  
-   `frontend/vite.config.js`を更新して環境変数を使用:
-
-```javascript
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    port: 3000,
-    proxy: {
-      '/api': {
-        target: process.env.VITE_API_URL || 'http://localhost:3001',
-        changeOrigin: true
-      }
-    }
-  },
-  preview: {
-    port: process.env.PORT || 3000,
-    host: '0.0.0.0'
-  }
-})
-```
-
-6. Update `frontend/src/services/api.js`:  
-   `frontend/src/services/api.js`を更新:
-
-```javascript
-const API_BASE_URL = import.meta.env.VITE_API_URL 
-  ? `${import.meta.env.VITE_API_URL}/api`
-  : '/api';
-```
-
-7. Commit and push changes | 変更をコミット・プッシュ:
-   ```bash
-   git add .
-   git commit -m "Configure for Railway deployment"
-   git push
-   ```
-
-8. Railway will automatically redeploy  
-   Railwayが自動的に再デプロイ
-
-6. Wait for deployment to complete, then copy the URL  
-   デプロイ完了後、URLをコピー
-   - Example: `https://frontend-production-xxxx.up.railway.app`
-
-#### Step 4: Update Backend CORS | バックエンドのCORSを更新
-
-1. Go back to **backend service** → **Variables**  
-   **backend service**に戻り → **Variables**へ
-2. Add the frontend URL | フロントエンドのURLを追加:
-   ```
-   FRONTEND_URL=https://frontend-production-xxxx.up.railway.app
-   ```
-   （Step 3 でコピーしたフロントエンドのURLを使用）
-
-3. Backend will automatically redeploy  
-   バックエンドが自動的に再デプロイされます
-
-#### Step 5: Access Your App | アプリにアクセス
-
-Visit your frontend Railway URL: `https://frontend-production-xxxx.up.railway.app`  
-フロントエンドのRailway URLにアクセス
-
-🎉 Your app is now live! | アプリが公開されました！
-
-### Common Issues | よくある問題
-
-#### ❌ "Nixpacks build failed" Error
-
-**Problem**: Railway can't find package.json  
-**問題**: Railwayがpackage.jsonを見つけられない
-
-**Solution**: Make sure to set **Root Directory** in Service Settings  
-**解決策**: Service Settingsで**Root Directory**を必ず設定してください
-- Backend: `backend`
-- Frontend: `frontend`
-
-#### ❌ API Connection Error | API接続エラー
-
-**Problem**: Frontend can't connect to backend  
-**問題**: フロントエンドがバックエンドに接続できない
-
-**Solution**: Check environment variables  
-**解決策**: 環境変数を確認
-- Frontend `VITE_API_URL` = Backend Railway URL
-- Backend `FRONTEND_URL` = Frontend Railway URL
-
-### Railway Free Tier Limits | Railway 無料枠の制限
-
-- **$5 credit per month** | 月$5のクレジット
-- **~500 hours of usage** | 約500時間の利用
-- **Automatic sleep after inactivity** | 非アクティブ時は自動スリープ
-- **Perfect for personal projects** | 個人プロジェクトに最適
-
-### Cost Optimization Tips | コスト最適化のヒント
-
-1. **Reduce API queries**: Use 1 page instead of 3 (see "Adjusting Results Count")  
-   **APIクエリを削減**: 3ページではなく1ページを使用（「結果数の調整」を参照）
-2. **Monitor usage**: Check Railway dashboard regularly  
-   **使用量を監視**: Railwayダッシュボードを定期的に確認
-3. **Add custom domain**: Free with Railway Pro ($5/month)  
-   **カスタムドメイン追加**: Railway Pro（$5/月）で無料
-
-## License | ライセンス
+## License
 
 ISC
 
-## Author | 作成者
+## Author
 
-DIY App Development Project | DIYアプリ開発プロジェクト
+DIY App Development Project
