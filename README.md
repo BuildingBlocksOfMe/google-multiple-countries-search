@@ -1,129 +1,165 @@
 # Google Search - Multi Country Comparison
 
-複数国のGoogle検索結果を並べて比較できるWebアプリケーションです。アメリカと日本の検索結果を左右に表示し、検索履歴を確認できます。
+A web application to compare Google search results from multiple countries side by side, with search history tracking.
 
-## 機能
+複数国のGoogle検索結果を比較できるWebアプリケーションです。検索履歴機能付き。
 
-- 🌍 **複数国の検索結果比較**: アメリカと日本のGoogle検索結果を同時表示
-- 📜 **検索履歴**: 過去の検索を保存し、クリックで再検索可能
-- 🎨 **モダンなUI**: TailwindCSSによる美しく使いやすいデザイン
-- 💾 **データベース保存**: SQLiteで検索履歴を永続化
+## Features | 機能
 
-## 技術スタック
+- 🌍 **Multi-Country Comparison**: Compare search results from 15 countries simultaneously  
+  **複数国比較**: 15カ国から選択して検索結果を同時表示
+- 🔍 **Extended Results**: Up to 30 search results per country  
+  **拡張結果**: 各国最大30件の検索結果
+- 📜 **Search History**: Save and replay previous searches  
+  **検索履歴**: 過去の検索を保存・再実行可能
+- 🎨 **Modern UI**: Beautiful interface built with TailwindCSS  
+  **モダンUI**: TailwindCSSによる美しいデザイン
+- 💾 **Persistent Storage**: SQLite database for search history  
+  **永続保存**: SQLiteで検索履歴を保存
 
-### フロントエンド
+## Supported Countries | 対応国
+
+🇺🇸 United States | 🇯🇵 Japan | 🇬🇧 United Kingdom | 🇩🇪 Germany | 🇫🇷 France  
+🇨🇳 China | 🇰🇷 South Korea | 🇮🇳 India | 🇧🇷 Brazil | 🇨🇦 Canada  
+🇦🇺 Australia | 🇲🇽 Mexico | 🇪🇸 Spain | 🇮🇹 Italy | 🇷🇺 Russia
+
+## Tech Stack | 技術スタック
+
+### Frontend | フロントエンド
 - React 18
 - Vite
 - TailwindCSS
 - Axios
 
-### バックエンド
+### Backend | バックエンド
 - Node.js
 - Express
 - SQLite3
 - Google Custom Search API
 
-## セットアップ手順
+## Setup | セットアップ
 
-### 1. Google Custom Search APIの設定
+### 1. Google Custom Search API Configuration | API設定
 
-#### APIキーの取得
-1. [Google Cloud Console](https://console.cloud.google.com/)にアクセス
-2. 新しいプロジェクトを作成（または既存のプロジェクトを選択）
-3. 「APIとサービス」→「ライブラリ」から「Custom Search API」を検索
-4. 「Custom Search API」を有効化
-5. 「APIとサービス」→「認証情報」から「APIキー」を作成
+#### Get API Key | APIキーの取得
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)  
+   [Google Cloud Console](https://console.cloud.google.com/)にアクセス
+2. Create a new project or select an existing one  
+   新しいプロジェクトを作成（または既存のプロジェクトを選択）
+3. Navigate to "APIs & Services" → "Library" and search for "Custom Search API"  
+   「APIとサービス」→「ライブラリ」から「Custom Search API」を検索
+4. Enable "Custom Search API"  
+   「Custom Search API」を有効化
+5. Go to "APIs & Services" → "Credentials" and create an "API Key"  
+   「APIとサービス」→「認証情報」から「APIキー」を作成
 
-#### カスタム検索エンジンIDの取得
-1. [Google Programmable Search Engine](https://programmablesearchengine.google.com/)にアクセス
-2. 「追加」をクリックして新しい検索エンジンを作成
-3. 検索対象: 「ウェブ全体を検索」を選択
-4. 検索エンジン名: 任意の名前を入力
-5. 作成後、「検索エンジンID（CX）」をコピー
+#### Get Custom Search Engine ID | 検索エンジンIDの取得
+1. Go to [Google Programmable Search Engine](https://programmablesearchengine.google.com/)  
+   [Google Programmable Search Engine](https://programmablesearchengine.google.com/)にアクセス
+2. Click "Add" to create a new search engine  
+   「追加」をクリックして新しい検索エンジンを作成
+3. Select "Search the entire web"  
+   「ウェブ全体を検索」を選択
+4. Enter any name for the search engine  
+   検索エンジン名を任意に入力
+5. Copy the "Search engine ID (CX)" after creation  
+   作成後、「検索エンジンID（CX）」をコピー
 
-### 2. バックエンドのセットアップ
+### 2. Backend Setup | バックエンドセットアップ
 
 ```bash
-# バックエンドディレクトリに移動
+# Navigate to backend directory
 cd backend
 
-# 依存関係のインストール（既に完了している場合はスキップ）
+# Install dependencies
 npm install
 
-# 環境変数ファイルを作成
+# Create environment file
 cp env.example.txt .env
 
-# .envファイルを編集してAPIキーを設定
-# GOOGLE_API_KEY=あなたのAPIキー
-# GOOGLE_CX_ID=あなたの検索エンジンID
+# Edit .env file and set your API credentials
+# GOOGLE_API_KEY=your_api_key_here
+# GOOGLE_CX_ID=your_custom_search_engine_id
 # PORT=3001
 ```
 
-### 3. フロントエンドのセットアップ
+### 3. Frontend Setup | フロントエンドセットアップ
 
 ```bash
-# フロントエンドディレクトリに移動
+# Navigate to frontend directory
 cd frontend
 
-# 依存関係のインストール（既に完了している場合はスキップ）
+# Install dependencies
 npm install
 ```
 
-## アプリケーションの起動
+## Running the Application | アプリケーションの起動
 
-### バックエンドサーバーの起動
+### Start Backend Server | バックエンドサーバーの起動
 
 ```bash
 cd backend
 npm start
 ```
 
-サーバーは `http://localhost:3001` で起動します。
+Server will start at `http://localhost:3001`  
+サーバーは `http://localhost:3001` で起動します
 
-### フロントエンドの起動
+### Start Frontend | フロントエンドの起動
 
-別のターミナルで以下を実行:
+In a separate terminal:  
+別のターミナルで実行:
 
 ```bash
 cd frontend
 npm run dev
 ```
 
-フロントエンドは `http://localhost:3000` で起動します。
+Frontend will start at `http://localhost:3000`  
+フロントエンドは `http://localhost:3000` で起動します
 
-### ブラウザでアクセス
+### Access the Application | アクセス
 
-ブラウザで `http://localhost:3000` にアクセスしてアプリケーションを使用できます。
+Open your browser and navigate to `http://localhost:3000`  
+ブラウザで `http://localhost:3000` にアクセス
 
-## 使い方
+## Usage | 使い方
 
-1. 検索バーにキーワードを入力
-2. 「検索」ボタンをクリック
-3. アメリカと日本の検索結果が左右に表示されます
-4. 左側のサイドバーに検索履歴が表示されます
-5. 履歴をクリックすると再検索できます
+1. Select two countries from the dropdown menus  
+   ドロップダウンメニューから2つの国を選択
+2. Enter your search query in the search bar  
+   検索バーにキーワードを入力
+3. Click "Search" button  
+   「検索」ボタンをクリック
+4. View results from both countries side by side  
+   両国の検索結果が左右に表示されます
+5. Search history appears in the left sidebar  
+   左サイドバーに検索履歴が表示されます
+6. Click on history items to re-run searches  
+   履歴をクリックすると再検索できます
 
-## プロジェクト構造
+## Project Structure | プロジェクト構造
 
 ```
 google-search-multiple-countries/
-├── backend/                    # バックエンドAPI
+├── backend/                    # Backend API | バックエンドAPI
 │   ├── database/
-│   │   └── db.js              # SQLiteデータベース設定
+│   │   └── db.js              # SQLite database | データベース設定
 │   ├── routes/
-│   │   └── search.js          # 検索APIエンドポイント
-│   ├── server.js              # Expressサーバー
+│   │   └── search.js          # Search API endpoints | 検索エンドポイント
+│   ├── server.js              # Express server | サーバー
 │   ├── package.json
-│   └── .env                   # 環境変数（要作成）
-├── frontend/                   # Reactフロントエンド
+│   └── .env                   # Environment variables | 環境変数（要作成）
+├── frontend/                   # React frontend | フロントエンド
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── SearchBar.jsx      # 検索入力フォーム
-│   │   │   ├── ResultsPanel.jsx   # 検索結果表示
-│   │   │   └── SearchHistory.jsx  # 検索履歴サイドバー
+│   │   │   ├── CountrySelector.jsx   # Country selection | 国選択
+│   │   │   ├── SearchBar.jsx         # Search input | 検索フォーム
+│   │   │   ├── ResultsPanel.jsx      # Results display | 結果表示
+│   │   │   └── SearchHistory.jsx     # History sidebar | 履歴サイドバー
 │   │   ├── services/
-│   │   │   └── api.js         # API通信
-│   │   ├── App.jsx            # メインアプリ
+│   │   │   └── api.js         # API communication | API通信
+│   │   ├── App.jsx            # Main app | メインアプリ
 │   │   ├── main.jsx
 │   │   └── index.css
 │   ├── index.html
@@ -132,48 +168,56 @@ google-search-multiple-countries/
 └── README.md
 ```
 
-## APIエンドポイント
+## API Endpoints | APIエンドポイント
 
 ### POST /api/search
+Execute search and return results from two countries.  
 検索を実行し、2カ国の結果を返します。
 
-**リクエスト:**
+**Request | リクエスト:**
 ```json
 {
-  "query": "検索キーワード"
+  "query": "search term",
+  "country1": "us",
+  "country2": "jp"
 }
 ```
 
-**レスポンス:**
+**Response | レスポンス:**
 ```json
 {
-  "query": "検索キーワード",
+  "query": "search term",
+  "countries": {
+    "country1": "us",
+    "country2": "jp"
+  },
   "results": {
-    "us": [
+    "country1": [
       {
-        "title": "タイトル",
+        "title": "Title",
         "link": "URL",
-        "snippet": "説明文",
+        "snippet": "Description",
         "displayLink": "example.com"
       }
     ],
-    "jp": [...]
+    "country2": [...]
   }
 }
 ```
 
 ### GET /api/history
+Get search history.  
 検索履歴を取得します。
 
-**クエリパラメータ:**
-- `limit`: 取得件数（デフォルト: 20）
+**Query Parameters | クエリパラメータ:**
+- `limit`: Number of items to return (default: 20) | 取得件数（デフォルト: 20）
 
-**レスポンス:**
+**Response | レスポンス:**
 ```json
 [
   {
     "id": 1,
-    "query": "検索キーワード",
+    "query": "search term",
     "country1": "US",
     "country2": "JP",
     "timestamp": "2026-01-14T12:00:00.000Z"
@@ -181,41 +225,74 @@ google-search-multiple-countries/
 ]
 ```
 
-## 注意事項
+## Important Notes | 注意事項
 
-### Google Custom Search API の制限
-- **無料枠**: 1日あたり100クエリまで
-- 無料枠を超える場合は、Google Cloud Platformで課金を有効にする必要があります
-- 実際のGoogle検索とは異なる結果が表示される場合があります
+### Google Custom Search API Limitations | API制限
+- **Free Tier**: 100 queries per day  
+  **無料枠**: 1日あたり100クエリまで
+- **Current Usage**: 6 queries per search (3 pages × 2 countries)  
+  **現在の使用量**: 1検索あたり6クエリ（3ページ×2カ国）
+- **Daily Searches**: ~16 searches per day with free tier  
+  **1日の検索回数**: 無料枠で約16回
+- Billing must be enabled for usage beyond free tier  
+  無料枠を超える場合は課金が必要
+- Results may differ from actual Google search  
+  実際のGoogle検索とは異なる結果が表示される場合があります
 
-### 開発環境
-- Node.js 18以上を推奨
-- npm または yarn
+### Requirements | 必要環境
+- Node.js 18 or higher | Node.js 18以上
+- npm or yarn
 
-### セキュリティ
-- `.env` ファイルは絶対にGitにコミットしないでください
-- 本番環境では適切な環境変数管理を行ってください
+### Security | セキュリティ
+- ⚠️ Never commit `.env` file to Git  
+  `.env` ファイルは絶対にGitにコミットしないでください
+- Use proper environment variable management in production  
+  本番環境では適切な環境変数管理を行ってください
 
-## トラブルシューティング
+## Troubleshooting | トラブルシューティング
 
-### APIキーエラーが出る場合
-- `.env` ファイルが正しく作成されているか確認
-- `GOOGLE_API_KEY` と `GOOGLE_CX_ID` が正しく設定されているか確認
-- Custom Search APIが有効化されているか確認
+### API Key Error | APIキーエラー
+- Check if `.env` file exists and is properly configured  
+  `.env` ファイルが正しく作成・設定されているか確認
+- Verify `GOOGLE_API_KEY` and `GOOGLE_CX_ID` are correct  
+  `GOOGLE_API_KEY` と `GOOGLE_CX_ID` が正しいか確認
+- Confirm Custom Search API is enabled  
+  Custom Search APIが有効化されているか確認
 
-### 検索結果が表示されない場合
-- バックエンドサーバーが起動しているか確認（`http://localhost:3001/health` にアクセス）
-- ブラウザのコンソールでエラーを確認
-- APIの無料枠（1日100クエリ）を超えていないか確認
+### No Search Results | 検索結果が表示されない
+- Verify backend server is running (check `http://localhost:3001/health`)  
+  バックエンドサーバーが起動しているか確認
+- Check browser console for errors  
+  ブラウザのコンソールでエラーを確認
+- Ensure you haven't exceeded the daily quota (100 queries)  
+  1日の無料枠（100クエリ）を超えていないか確認
 
-### ポートが使用中の場合
-- バックエンド: `.env` ファイルの `PORT` を変更
-- フロントエンド: `vite.config.js` の `server.port` を変更
+### Port Already in Use | ポートが使用中
+- Backend: Change `PORT` in `.env` file  
+  バックエンド: `.env` ファイルの `PORT` を変更
+- Frontend: Change `server.port` in `vite.config.js`  
+  フロントエンド: `vite.config.js` の `server.port` を変更
 
-## ライセンス
+## Adjusting Results Count | 結果数の調整
+
+To change the number of results per country, edit `backend/routes/search.js`:  
+国ごとの結果数を変更するには、`backend/routes/search.js` を編集:
+
+```javascript
+// Current: 3 pages (30 results) - 6 queries per search
+const results1Items = await fetchMultiplePages(config1, 3);
+
+// Option 1: 2 pages (20 results) - 4 queries per search (~25 searches/day)
+const results1Items = await fetchMultiplePages(config1, 2);
+
+// Option 2: 1 page (10 results) - 2 queries per search (~50 searches/day)
+const results1Items = await fetchMultiplePages(config1, 1);
+```
+
+## License | ライセンス
 
 ISC
 
-## 作成者
+## Author | 作成者
 
-DIYアプリ開発プロジェクト
+DIY App Development Project | DIYアプリ開発プロジェクト
