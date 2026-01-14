@@ -1,0 +1,14 @@
+# Railway configuration for monorepo
+# This file tells Railway how to build and deploy each service
+
+# Note: You still need to create separate services in Railway UI
+# and set the Root Directory for each service
+
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+numReplicas = 1
+sleepApplication = false
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
