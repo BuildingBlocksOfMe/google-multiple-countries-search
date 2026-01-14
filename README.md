@@ -289,6 +289,157 @@ const results1Items = await fetchMultiplePages(config1, 2);
 const results1Items = await fetchMultiplePages(config1, 1);
 ```
 
+## Deployment | デプロイ
+
+### Railway Deployment (Recommended) | Railway デプロイ（推奨）
+
+Railway is the easiest way to deploy this application with SQLite support.  
+RailwayはSQLite対応で最も簡単なデプロイ方法です。
+
+#### Prerequisites | 前提条件
+- Railway account (sign up at [railway.app](https://railway.app/))  
+  Railwayアカウント（[railway.app](https://railway.app/)で登録）
+- GitHub repository (already done ✓)  
+  GitHubリポジトリ（完了済み✓）
+
+#### Step 1: Create New Project | 新規プロジェクト作成
+
+1. Go to [Railway Dashboard](https://railway.app/dashboard)  
+   [Railwayダッシュボード](https://railway.app/dashboard)にアクセス
+2. Click **"New Project"**  
+   **"New Project"**をクリック
+3. Select **"Deploy from GitHub repo"**  
+   **"Deploy from GitHub repo"**を選択
+4. Choose your repository: `BuildingBlocksOfMe/google-multiple-countries-search`  
+   リポジトリを選択: `BuildingBlocksOfMe/google-multiple-countries-search`
+
+#### Step 2: Deploy Backend | バックエンドのデプロイ
+
+1. Railway will detect the project. Click **"Add variables"**  
+   Railwayがプロジェクトを検出します。**"Add variables"**をクリック
+2. Add environment variables | 環境変数を追加:
+   ```
+   GOOGLE_API_KEY=your_api_key_here
+   GOOGLE_CX_ID=your_search_engine_id
+   PORT=3001
+   ```
+3. In **Settings**, set:  
+   **Settings**で設定:
+   - **Root Directory**: `backend`
+   - **Start Command**: `node server.js`
+   - **Build Command**: `npm install`
+
+4. Add a **Volume** for SQLite persistence | SQLite永続化用のVolumeを追加:
+   - Go to **Data** tab  
+     **Data**タブに移動
+   - Click **"New Volume"**  
+     **"New Volume"**をクリック
+   - Mount Path: `/app/backend/database`  
+     マウントパス: `/app/backend/database`
+
+5. Click **"Deploy"** | **"Deploy"**をクリック
+
+6. Copy the generated URL (e.g., `https://your-app.railway.app`)  
+   生成されたURLをコピー（例: `https://your-app.railway.app`）
+
+#### Step 3: Deploy Frontend | フロントエンドのデプロイ
+
+1. In the same Railway project, click **"New Service"**  
+   同じRailwayプロジェクトで**"New Service"**をクリック
+2. Select **"GitHub Repo"** → Same repository  
+   **"GitHub Repo"**を選択 → 同じリポジトリ
+3. In **Settings**, set:  
+   **Settings**で設定:
+   - **Root Directory**: `frontend`
+   - **Build Command**: `npm install && npm run build`
+   - **Start Command**: `npm run preview -- --port $PORT --host 0.0.0.0`
+
+4. Add environment variable | 環境変数を追加:
+   ```
+   VITE_API_URL=https://your-backend-url.railway.app
+   ```
+
+5. Update `frontend/vite.config.js` to use environment variable:  
+   `frontend/vite.config.js`を更新して環境変数を使用:
+
+```javascript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 3000,
+    proxy: {
+      '/api': {
+        target: process.env.VITE_API_URL || 'http://localhost:3001',
+        changeOrigin: true
+      }
+    }
+  },
+  preview: {
+    port: process.env.PORT || 3000,
+    host: '0.0.0.0'
+  }
+})
+```
+
+6. Update `frontend/src/services/api.js`:  
+   `frontend/src/services/api.js`を更新:
+
+```javascript
+const API_BASE_URL = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/api`
+  : '/api';
+```
+
+7. Commit and push changes | 変更をコミット・プッシュ:
+   ```bash
+   git add .
+   git commit -m "Configure for Railway deployment"
+   git push
+   ```
+
+8. Railway will automatically redeploy  
+   Railwayが自動的に再デプロイ
+
+#### Step 4: Configure CORS | CORSの設定
+
+Update `backend/server.js` to allow frontend domain:  
+`backend/server.js`を更新してフロントエンドドメインを許可:
+
+```javascript
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://your-frontend.railway.app'
+  ]
+}));
+```
+
+#### Step 5: Access Your App | アプリにアクセス
+
+Visit your frontend Railway URL: `https://your-frontend.railway.app`  
+フロントエンドのRailway URLにアクセス: `https://your-frontend.railway.app`
+
+🎉 Your app is now live! | アプリが公開されました！
+
+### Railway Free Tier Limits | Railway 無料枠の制限
+
+- **$5 credit per month** | 月$5のクレジット
+- **~500 hours of usage** | 約500時間の利用
+- **Automatic sleep after inactivity** | 非アクティブ時は自動スリープ
+- **Perfect for personal projects** | 個人プロジェクトに最適
+
+### Cost Optimization Tips | コスト最適化のヒント
+
+1. **Reduce API queries**: Use 1 page instead of 3 (see "Adjusting Results Count")  
+   **APIクエリを削減**: 3ページではなく1ページを使用（「結果数の調整」を参照）
+2. **Monitor usage**: Check Railway dashboard regularly  
+   **使用量を監視**: Railwayダッシュボードを定期的に確認
+3. **Add custom domain**: Free with Railway Pro ($5/month)  
+   **カスタムドメイン追加**: Railway Pro（$5/月）で無料
+
 ## License | ライセンス
 
 ISC

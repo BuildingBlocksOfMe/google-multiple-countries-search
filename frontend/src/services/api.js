@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/api`
+  : '/api';
 
 // 複数国の検索を実行
 export const searchMultipleCountries = async (query, country1 = 'us', country2 = 'jp') => {
