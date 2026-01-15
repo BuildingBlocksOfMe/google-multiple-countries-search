@@ -8,13 +8,22 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: process.env.VITE_API_URL || 'http://localhost:3001',
+        target: 'http://localhost:3001',
         changeOrigin: true
       }
     }
   },
-  preview: {
-    port: process.env.PORT || 3000,
-    host: '0.0.0.0'
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    // 本番ビルドの最適化
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          axios: ['axios']
+        }
+      }
+    }
   }
 })

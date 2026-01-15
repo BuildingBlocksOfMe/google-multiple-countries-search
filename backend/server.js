@@ -9,11 +9,22 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// 本番環境のフロントエンドURLを許可
+const allowedOrigins = [
+  'http://localhost:3000',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
 // ミドルウェア
 app.use(cors({
-  origin: process.env.FRONTEND_URL 
-    ? [process.env.FRONTEND_URL, 'http://localhost:3000']
-    : '*',
+  origin: function(origin, callback) {
+    // originがない場合（Postmanなど）または許可リストにある場合は許可
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 app.use(express.json());
